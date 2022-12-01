@@ -1,0 +1,935 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 9,
+  "iteration": 1669767767619,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 3,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "velocitykmh"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCAN.VehicleSpeed",
+          "queryType": "raw",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "refId": "A",
+          "table": "\"VehicleDataTable\"",
+          "waitForResult": true
+        }
+      ],
+      "thresholds": [],
+      "title": "Vehicle Speed history",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-YlRd"
+          },
+          "mappings": [],
+          "max": 200,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 40
+              },
+              {
+                "color": "red",
+                "value": 89
+              }
+            ]
+          },
+          "unit": "velocitykmh"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 14,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCAN.VehicleSpeed",
+          "queryType": "raw",
+          "rawQuery": "SELECT avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Current Vehicle Speed",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "velocitykmh"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 105
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Maximum"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 112
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Minimum"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 87
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 21,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCAN.VehicleSpeed",
+          "queryType": "raw",
+          "rawQuery": "SELECT avg(measure_value::double) AS  \"Average\", max(measure_value::double) AS  \"Maximum\", min(measure_value::double) AS  \"Minimum\" \nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\n",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Vehicle Speed Statistics",
+      "type": "table"
+    },
+    {
+      "cards": {},
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateOranges",
+        "exponent": 0.5,
+        "max": 8,
+        "min": -1,
+        "mode": "spectrum"
+      },
+      "dataFormat": "timeseries",
+      "gridPos": {
+        "h": 6,
+        "w": 14,
+        "x": 0,
+        "y": 6
+      },
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
+      "id": 23,
+      "legend": {
+        "show": true
+      },
+      "pluginVersion": "8.4.7",
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "hide": false,
+          "measure": "HSCAN.Gear",
+          "queryType": "raw",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::bigint) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "refId": "A",
+          "table": "\"VehicleDataTable\"",
+          "waitForResult": true
+        }
+      ],
+      "title": "Gear Position Heatmap",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "short",
+        "logBase": 1,
+        "max": "8",
+        "min": "-1",
+        "show": true
+      },
+      "yBucketBound": "auto"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 14,
+        "y": 6
+      },
+      "id": 25,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCAN.Gear",
+          "queryType": "raw",
+          "rawQuery": "SELECT avg(measure_value::BIGINT) AS  \"Average\", max(measure_value::BIGINT) AS  \"Maximum\", min(measure_value::BIGINT) AS  \"Minimum\" \nFROM $__database.$__table\nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\n",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Gear Position Statics",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "forceN"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 26,
+      "options": {
+        "bucketOffset": 0,
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        }
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "hide": false,
+          "measure": "HSCAN.CollisionIntensity",
+          "queryType": "raw",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "refId": "A",
+          "table": "\"VehicleDataTable\"",
+          "waitForResult": false
+        }
+      ],
+      "title": "Collision Intensity Histogram",
+      "type": "histogram"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 27,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time of Collision"
+          }
+        ]
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "hide": false,
+          "measure": "HSCAN.CollisionIntensity",
+          "queryType": "raw",
+          "rawQuery": "SELECT vehicleName AS \"Vehicle Name\", BIN(time, ${aggregationInterval}) AS \"Time of Collision\", avg(measure_value::double) AS  \"Collision Intensity Value(N)\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "refId": "A",
+          "table": "\"VehicleDataTable\"",
+          "waitForResult": false
+        }
+      ],
+      "title": "Collision Sensor(CollisionIntensity)",
+      "type": "table"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 8,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 14,
+        "x": 0,
+        "y": 18
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCAN.ThrottlePosition",
+          "queryType": "raw",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "refId": "A",
+          "table": "\"VehicleDataTable\"",
+          "waitForResult": true
+        }
+      ],
+      "title": "Gas pedal position history",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 14,
+        "y": 18
+      },
+      "id": 19,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCAN.ThrottlePosition",
+          "queryType": "raw",
+          "rawQuery": "SELECT avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Current gas pedal position",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "grafana-timestream-datasource",
+        "uid": "FJKBbQdVk"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 105
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Maximum"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 112
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Minimum"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 87
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 18
+      },
+      "id": 22,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "measure": "HSCAN.ThrottlePosition",
+          "queryType": "raw",
+          "rawQuery": "SELECT avg(measure_value::double) AS  \"Average\", max(measure_value::double) AS  \"Maximum\", min(measure_value::double) AS  \"Minimum\" \nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Gas pedal statistics",
+      "type": "table"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 35,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "fwdemo-s32g",
+          "value": "fwdemo-s32g"
+        },
+        "datasource": {
+          "type": "grafana-timestream-datasource",
+          "uid": "FJKBbQdVk"
+        },
+        "definition": "SELECT distinct(vehicleName) FROM \"IoTFleetWiseDB-1669190634\".\"VehicleDataTable\" ",
+        "description": "Id of the vehicle to query",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Vehicle Name",
+        "multi": false,
+        "name": "vehicleName",
+        "options": [],
+        "query": "SELECT distinct(vehicleName) FROM \"IoTFleetWiseDB-1669190634\".\"VehicleDataTable\" ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "1s",
+          "value": "1s"
+        },
+        "hide": 0,
+        "label": "Aggregation interval",
+        "name": "aggregationInterval",
+        "options": [
+          {
+            "selected": false,
+            "text": "100ms",
+            "value": "100ms"
+          },
+          {
+            "selected": true,
+            "text": "1s",
+            "value": "1s"
+          },
+          {
+            "selected": false,
+            "text": "5s",
+            "value": "5s"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "20s",
+            "value": "20s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "3m",
+            "value": "3m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "60m",
+            "value": "60m"
+          }
+        ],
+        "query": "100ms, 1s, 5s, 10s, 20s, 30s, 1m, 3m, 5m, 30m, 60m",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "AWS IoT FleetWise RDB2 - Signal overview-sunjimmy@",
+  "uid": "A5N2vXw7z",
+  "version": 100,
+  "weekStart": ""
+}
