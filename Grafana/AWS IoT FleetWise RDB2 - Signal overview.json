@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 9,
-  "iteration": 1669767767619,
+  "iteration": 1670211395070,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -107,7 +107,7 @@
             "type": "grafana-timestream-datasource",
             "uid": "FJKBbQdVk"
           },
-          "measure": "HSCAN.VehicleSpeed",
+          "measure": "HSCANv2.VehicleSpeed",
           "queryType": "raw",
           "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
           "refId": "A",
@@ -177,9 +177,9 @@
             "type": "grafana-timestream-datasource",
             "uid": "FJKBbQdVk"
           },
-          "measure": "HSCAN.VehicleSpeed",
+          "measure": "HSCANv2.VehicleSpeed",
           "queryType": "raw",
-          "rawQuery": "SELECT avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "rawQuery": "SELECT avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\nGROUP BY vehicleName,BIN(time, 0.1s) \nORDER BY BIN(time, 0.1s)",
           "refId": "A",
           "table": "\"VehicleDataTable\""
         }
@@ -278,7 +278,7 @@
             "type": "grafana-timestream-datasource",
             "uid": "FJKBbQdVk"
           },
-          "measure": "HSCAN.VehicleSpeed",
+          "measure": "HSCANv2.VehicleSpeed",
           "queryType": "raw",
           "rawQuery": "SELECT avg(measure_value::double) AS  \"Average\", max(measure_value::double) AS  \"Maximum\", min(measure_value::double) AS  \"Minimum\" \nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\n",
           "refId": "A",
@@ -323,7 +323,7 @@
             "uid": "FJKBbQdVk"
           },
           "hide": false,
-          "measure": "HSCAN.Gear",
+          "measure": "HSCANv2.Gear",
           "queryType": "raw",
           "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::bigint) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
           "refId": "A",
@@ -341,10 +341,9 @@
         "show": true
       },
       "yAxis": {
+        "decimals": 0,
         "format": "short",
         "logBase": 1,
-        "max": "8",
-        "min": "-1",
         "show": true
       },
       "yBucketBound": "auto"
@@ -353,10 +352,98 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "continuous-YlRd"
+          },
+          "mappings": [
+            {
+              "options": {
+                "-1": {
+                  "index": 0,
+                  "text": "R"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 8,
+          "min": -1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 4
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 14,
+        "y": 6
+      },
+      "id": 28,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCANv2.Gear",
+          "queryType": "raw",
+          "rawQuery": "SELECT avg(measure_value::bigint) AS  \"Gear\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\nGROUP BY vehicleName,BIN(time, 0.1s) \nORDER BY BIN(time, 0.1s)",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Current Gear",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "continuous-GrYlRd"
           },
           "decimals": 0,
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "-1": {
+                  "index": 0,
+                  "text": "R"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -376,8 +463,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 10,
-        "x": 14,
+        "w": 6,
+        "x": 18,
         "y": 6
       },
       "id": 25,
@@ -401,9 +488,9 @@
             "type": "grafana-timestream-datasource",
             "uid": "FJKBbQdVk"
           },
-          "measure": "HSCAN.Gear",
+          "measure": "HSCANv2.Gear",
           "queryType": "raw",
-          "rawQuery": "SELECT avg(measure_value::BIGINT) AS  \"Average\", max(measure_value::BIGINT) AS  \"Maximum\", min(measure_value::BIGINT) AS  \"Minimum\" \nFROM $__database.$__table\nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\n",
+          "rawQuery": "SELECT  max(measure_value::BIGINT) AS  \"Maximum\", min(measure_value::BIGINT) AS  \"Minimum\" \nFROM $__database.$__table\nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\n",
           "refId": "A",
           "table": "\"VehicleDataTable\""
         }
@@ -427,6 +514,7 @@
             },
             "lineWidth": 1
           },
+          "decimals": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -437,7 +525,7 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 20000
               }
             ]
           },
@@ -446,8 +534,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 12,
+        "h": 8,
+        "w": 7,
         "x": 0,
         "y": 12
       },
@@ -469,7 +557,7 @@
             "uid": "FJKBbQdVk"
           },
           "hide": false,
-          "measure": "HSCAN.CollisionIntensity",
+          "measure": "HSCANv2.CollisionIntensity",
           "queryType": "raw",
           "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
           "refId": "A",
@@ -505,12 +593,25 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Vehicle Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 111
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
+        "h": 8,
+        "w": 8,
+        "x": 7,
         "y": 12
       },
       "id": 27,
@@ -539,9 +640,9 @@
             "uid": "FJKBbQdVk"
           },
           "hide": false,
-          "measure": "HSCAN.CollisionIntensity",
+          "measure": "HSCANv2.CollisionIntensity",
           "queryType": "raw",
-          "rawQuery": "SELECT vehicleName AS \"Vehicle Name\", BIN(time, ${aggregationInterval}) AS \"Time of Collision\", avg(measure_value::double) AS  \"Collision Intensity Value(N)\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "rawQuery": "SELECT vehicleName AS \"Vehicle Name\", BIN(time, ${aggregationInterval}) AS \"Time of Collision\", avg(measure_value::double) AS  \"Intensity Value(N)\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
           "refId": "A",
           "table": "\"VehicleDataTable\"",
           "waitForResult": false
@@ -549,6 +650,406 @@
       ],
       "title": "Collision Sensor(CollisionIntensity)",
       "type": "table"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 1,
+                  "text": "Closed"
+                },
+                "1": {
+                  "index": 0,
+                  "text": "Open"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 12
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "limit": 10,
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCANv2.DOOR_OPEN_FL",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::bigint) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, 1s) \nORDER BY BIN(time, 1s)",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Front Left Door Status",
+      "type": "stat"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 1,
+                  "text": "Closed"
+                },
+                "1": {
+                  "index": 0,
+                  "text": "Open"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 12
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "limit": 10,
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCANv2.DOOR_OPEN_FR",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::bigint) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, 1s) \nORDER BY BIN(time, 1s)",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Front Right Door Status",
+      "type": "stat"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 1,
+                  "text": "Off"
+                },
+                "1": {
+                  "index": 0,
+                  "text": "On"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 21,
+        "y": 12
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "limit": 10,
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCANv2.HIGH_BEAM_FLASH",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::bigint) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, 1s) \nORDER BY BIN(time, 1s)",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Flinker",
+      "type": "stat"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 1,
+                  "text": "Closed"
+                },
+                "1": {
+                  "index": 0,
+                  "text": "Open"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 16
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "limit": 10,
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCANv2.DOOR_OPEN_RL",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::bigint) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, 1s) \nORDER BY BIN(time, 1s)",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Rear Left Door Status",
+      "type": "stat"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 1,
+                  "text": "Closed"
+                },
+                "1": {
+                  "index": 0,
+                  "text": "Open"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 16
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "limit": 1,
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.4.7",
+      "targets": [
+        {
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCANv2.DOOR_OPEN_RR",
+          "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::bigint) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, 1s) \nORDER BY BIN(time, 1s)",
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
+        }
+      ],
+      "title": "Rear Rear Door Status",
+      "type": "stat"
     },
     {
       "fieldConfig": {
@@ -561,7 +1062,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 8,
+            "fillOpacity": 30,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -606,13 +1107,13 @@
         "h": 6,
         "w": 14,
         "x": 0,
-        "y": 18
+        "y": 20
       },
       "id": 15,
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "list",
+          "displayMode": "hidden",
           "placement": "bottom"
         },
         "tooltip": {
@@ -627,7 +1128,7 @@
             "type": "grafana-timestream-datasource",
             "uid": "FJKBbQdVk"
           },
-          "measure": "HSCAN.ThrottlePosition",
+          "measure": "HSCANv2.ThrottlePosition",
           "queryType": "raw",
           "rawQuery": "SELECT vehicleName, BIN(time, ${aggregationInterval}), avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}'\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
           "refId": "A",
@@ -667,14 +1168,14 @@
         "h": 6,
         "w": 4,
         "x": 14,
-        "y": 18
+        "y": 20
       },
       "id": 19,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "fields": "",
           "values": false
@@ -691,9 +1192,9 @@
             "type": "grafana-timestream-datasource",
             "uid": "FJKBbQdVk"
           },
-          "measure": "HSCAN.ThrottlePosition",
+          "measure": "HSCANv2.ThrottlePosition",
           "queryType": "raw",
-          "rawQuery": "SELECT avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\nGROUP BY vehicleName,BIN(time, ${aggregationInterval}) \nORDER BY BIN(time, ${aggregationInterval})",
+          "rawQuery": "SELECT avg(measure_value::double) AS  \"$__measure avg(${aggregationInterval})\"\nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\nGROUP BY vehicleName,BIN(time, 0.1s) \nORDER BY BIN(time, 0.1s)",
           "refId": "A",
           "table": "\"VehicleDataTable\""
         }
@@ -702,10 +1203,6 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "grafana-timestream-datasource",
-        "uid": "FJKBbQdVk"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -774,7 +1271,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 18
+        "y": 20
       },
       "id": 22,
       "options": {
@@ -791,10 +1288,16 @@
       "pluginVersion": "8.4.7",
       "targets": [
         {
-          "measure": "HSCAN.ThrottlePosition",
+          "database": "\"IoTFleetWiseDB-1669190634\"",
+          "datasource": {
+            "type": "grafana-timestream-datasource",
+            "uid": "FJKBbQdVk"
+          },
+          "measure": "HSCANv2.ThrottlePosition",
           "queryType": "raw",
           "rawQuery": "SELECT avg(measure_value::double) AS  \"Average\", max(measure_value::double) AS  \"Maximum\", min(measure_value::double) AS  \"Minimum\" \nFROM $__database.$__table \nWHERE measure_name = '$__measure'  and vehicleName = '${vehicleName}' and $__timeFilter\n",
-          "refId": "A"
+          "refId": "A",
+          "table": "\"VehicleDataTable\""
         }
       ],
       "title": "Gas pedal statistics",
@@ -915,6 +1418,7 @@
   },
   "timepicker": {
     "refresh_intervals": [
+      "2s",
       "5s",
       "10s",
       "30s",
@@ -930,6 +1434,6 @@
   "timezone": "",
   "title": "AWS IoT FleetWise RDB2 - Signal overview-sunjimmy@",
   "uid": "A5N2vXw7z",
-  "version": 100,
+  "version": 170,
   "weekStart": ""
 }
