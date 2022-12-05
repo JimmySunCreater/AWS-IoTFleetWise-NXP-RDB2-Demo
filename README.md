@@ -66,16 +66,20 @@ Data Collection Schemes describes what and how to collect signal, it is generate
 The DBC file(CAN database files)is a simple text file that consists of information for decoding raw CAN bus data to physical values in human readable form or encoding physical values to CAN bus data. DBC file is used as shared schema for data exchange from the car and cloud in this demo. Python code is used to convert CARLA physical values(decimal) to ECU CAN bus values（hexadecimal）and ingest to RDB2.
 * * *
 **6. Data ingestion**
+
 Since CARLA is install in a server, a usb to CAN converter is used to transfer the digital data into CAN bus logic level signal. CAN high/low are connected to FLEX_CAN0_H/L.
 >Detailed configuration for step 5 and 6 can be reached at [/CARLA/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/CARLA/README.md)
 * * *
 **7. Inspect canbus data and package**
+
 The IoT FleetWise Edge Agent will specify what data to collect and which collection triggers to inspect data following rules of Data Collection Schemes. 
 * * *
 **8. Upload data payload**
+
 The data will be packed and send to IoT Core by IoT FleetWise Edge Agent.
 * * *
 **9. Store vehicle data**
+
 The data will be stored at Amazon Timestream.
 >Detailed configuration for Timestream can be reached at [Fleetwise/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Fleetwise/README.md)
 * * *
@@ -87,6 +91,7 @@ The data will be stored at Amazon Timestream.
 **12. Data visualization**
 * * *
 **13. Persistent storage**
+
 The vehicle data can be stored to Amazon s3 for persistent, low-cost storage.
 
 # Getting Help
