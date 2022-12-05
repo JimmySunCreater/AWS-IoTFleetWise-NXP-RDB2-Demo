@@ -34,11 +34,11 @@ It's assumed that you have got aws account and config aws cli with administrator
 
   Amazon Managed Grafana is a fully managed service with rich, interactive data visualizations to help customers analyze, monitor, and alarm on metrics, logs, and traces across multiple data sources. This demo use AMG to visualize near-realtime data such as vehicle speed,gear and perform statistical analysis such as collision time and collision severity.
 ## Environment and Dashboard
-Grafana Dashboard
-![GrafanaDashboard](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/Grafana%20Gauge.png)
-
 Environment
 ![Environment.png](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Environment.png)
+
+Grafana Dashboard
+![GrafanaDashboard](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/Grafana%20Gauge.png)
 
 # Deploy and Run
 The procedures to deploy and run the demo are as follows while please refer to the git folders for detailed configuration.
