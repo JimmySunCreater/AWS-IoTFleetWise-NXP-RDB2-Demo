@@ -85,10 +85,20 @@ The data will be stored at Amazon Timestream.
 * * *
 **10. Config visualization specification**
 
+Quickly setting up Amazon Managed Grafana dashboards to demonstrate analysis of data stored in Amazon Timestream by AWS IoT FleetWise service
+>Detailed configuration for Timestream can be reached at [Grafana/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/README.md)
 * * *
 **11. Query data and process**
+
+Grafana query data from Timestream.
 * * *
 **12. Data visualization**
+
+There are 4 parts in the Grafana Dashboard
+Gauge #1-Speed history， current speed and analysis statics
+Gauge #2-Gear history heatmap， current gear and analysis statics
+Gauge #3-Collision intensity history， current door&flinker status
+Gauge #4-Gas pedal history，current padel position and analysis statics
 * * *
 **13. Persistent storage**
 
