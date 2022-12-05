@@ -11,7 +11,7 @@ It's assumed that you have got aws account and config aws cli with administrator
 >Note: AWS IoT FleetWise is currently available in US East (N. Virginia) and Europe (Frankfurt).
 # Architecture
 ![IoTFleetwise%20RDB2_02.png](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/IoTFleetwise%20RDB2%20Architecture.png)
-## Models/Services Used
+## Moduels/Services Used
 * [Carla](http://carla.org/)
 
   CARLA is an open-source autonomous driving simulator. It was built from scratch to serve as a modular and flexible API to address a range of tasks involved in the problem of autonomous driving.This demo use carla to simulate ECUs in the vehicle and send encoded data to the signal collecter(NXP-S32G-VNP-RDB2)in format of CANBus.
