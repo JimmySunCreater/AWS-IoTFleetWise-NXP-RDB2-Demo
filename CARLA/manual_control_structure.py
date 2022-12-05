@@ -26,7 +26,7 @@ Use ARROWS or WASD keys for control.
 
     L            : toggle next light type
     SHIFT + L    : toggle high beam
-    Z/X          : toggle right/left blinker
+    Z            : toggle double blinker
     I            : toggle interior light
 
     TAB          : change sensor position
@@ -36,7 +36,11 @@ Use ARROWS or WASD keys for control.
     C            : change weather (Shift+C reverse)
     Backspace    : change vehicle
 
-    O            : open/close all doors of vehicle
+    O            : open/close Front Left Door
+    CTRL + O     : open/close Front Right Door
+    K            : open/close Rear Left Door
+    CTRL + K     : open/close Rear Right Door
+
     T            : toggle vehicle's telemetry
 
     V            : Select next map layer (Shift+V reverse)
@@ -124,7 +128,8 @@ try:
     from pygame.locals import K_l
     from pygame.locals import K_m
     from pygame.locals import K_n
-    from pygame.locals import K_o
+    from pygame.locals import K_o        #初始化key-o -Sun Jian-
+    from pygame.locals import K_k        #初始化key-k -Sun Jian-
     from pygame.locals import K_p
     from pygame.locals import K_q
     from pygame.locals import K_r
@@ -218,7 +223,11 @@ class World(object):
         self.recording_start = 0
         self.constant_velocity_enabled = False
         self.show_vehicle_telemetry = False
-        self.doors_are_open = False
+        self.door_FL_is_open = 0         #Init door status -Sun Jian-
+        self.door_FR_is_open = 0         #Init door status -Sun Jian-
+        self.door_RL_is_open = 0         #Init door status -Sun Jian-
+        self.door_RR_is_open = 0         #Init door status -Sun Jian-
+        self.double_blinker  = 0         #Init double blinker status -Sun Jian-
         self.current_map_layer = 0
         self.map_layer_names = [
             carla.MapLayer.NONE,
@@ -365,6 +374,7 @@ class World(object):
 class KeyboardControl(object):
     """Class that handles keyboard input."""
     def __init__(self, world, start_in_autopilot):
+        self.can = CAN()   #--Echo class CAN--Sun Jian--
         self._autopilot_enabled = start_in_autopilot
         if isinstance(world.player, carla.Vehicle):
             self._control = carla.VehicleControl()
@@ -429,18 +439,56 @@ class KeyboardControl(object):
                         world.player.enable_constant_velocity(carla.Vector3D(17, 0, 0))
                         world.constant_velocity_enabled = True
                         world.hud.notification("Enabled Constant Velocity Mode at 60 km/h")
-                elif event.key == K_o:
+
+                elif event.key == K_o and not (pygame.key.get_mods() & KMOD_CTRL):   #Front Left Door control-Sun Jian-
                     try:
-                        if world.doors_are_open:
-                            world.hud.notification("Closing Doors")
-                            world.doors_are_open = False
-                            world.player.close_door(carla.VehicleDoor.All)
+                        if world.door_FL_is_open==1:
+                            world.hud.notification("Closing Front Left Door")
+                            world.door_FL_is_open = 0
+                            world.player.close_door(carla.VehicleDoor.FL)
                         else:
-                            world.hud.notification("Opening doors")
-                            world.doors_are_open = True
-                            world.player.open_door(carla.VehicleDoor.All)
+                            world.hud.notification("Opening Front Left Door")
+                            world.door_FL_is_open = 1
+                            world.player.open_door(carla.VehicleDoor.FL)
                     except Exception:
                         pass
+                elif event.key == K_o and (pygame.key.get_mods() & KMOD_CTRL):      #Front Right Door control-Sun Jian-
+                    try:
+                        if world.door_FR_is_open==1:
+                            world.hud.notification("Closing Front Right Door")
+                            world.door_FR_is_open = 0
+                            world.player.close_door(carla.VehicleDoor.FR)
+                        else:
+                            world.hud.notification("Opening Front Right Door")
+                            world.door_FR_is_open = 1
+                            world.player.open_door(carla.VehicleDoor.FR)
+                    except Exception:
+                        pass
+                elif event.key == K_k and not (pygame.key.get_mods() & KMOD_CTRL):  #Rear Left Door control-Sun Jian-
+                    try:
+                        if world.door_RL_is_open==1:
+                            world.hud.notification("Closing Rear Left Door")
+                            world.door_RL_is_open = 0
+                            world.player.close_door(carla.VehicleDoor.RL)
+                        else:
+                            world.hud.notification("Opening Rear Left Door")
+                            world.door_RL_is_open = 1
+                            world.player.open_door(carla.VehicleDoor.RL)
+                    except Exception:
+                        pass
+                elif event.key == K_k and (pygame.key.get_mods() & KMOD_CTRL):     #Rear Right Door control-Sun Jian-
+                    try:
+                        if world.door_RR_is_open==1:
+                            world.hud.notification("Closing Rear Right Door")
+                            world.door_RR_is_open = 0
+                            world.player.close_door(carla.VehicleDoor.RR)
+                        else:
+                            world.hud.notification("Opening Rear Right Door")
+                            world.door_RR_is_open = 1
+                            world.player.open_door(carla.VehicleDoor.RR)
+                    except Exception:
+                        pass
+
                 elif event.key == K_t:
                     if world.show_vehicle_telemetry:
                         world.player.show_debug_telemetry(False)
@@ -538,10 +586,22 @@ class KeyboardControl(object):
                             current_lights ^= carla.VehicleLightState.Fog
                     elif event.key == K_i:
                         current_lights ^= carla.VehicleLightState.Interior
-                    elif event.key == K_z:
-                        current_lights ^= carla.VehicleLightState.LeftBlinker
-                    elif event.key == K_x:
-                        current_lights ^= carla.VehicleLightState.RightBlinker
+                    # elif event.key == K_z and not (pygame.key.get_mods() & KMOD_CTRL):  #double blinker config-Sun Jian
+                    #     current_lights ^= carla.VehicleLightState.LeftBlinker
+                    # elif event.key == K_x:
+                    #     current_lights ^= carla.VehicleLightState.RightBlinker
+                    elif event.key == K_z:      #double blinker config-Sun Jian
+                        if world.double_blinker == 1:
+                            world.hud.notification("Closing blinker")
+                            world.double_blinker = 0
+                            current_lights ^= carla.VehicleLightState.LeftBlinker
+                            current_lights ^= carla.VehicleLightState.RightBlinker
+                        else:
+                            world.hud.notification("Opening blinker")
+                            world.double_blinker = 1
+                            current_lights ^= carla.VehicleLightState.LeftBlinker
+                            current_lights ^= carla.VehicleLightState.RightBlinker
+                    self.can.send_BCM(world.door_FL_is_open,world.door_FR_is_open,world.door_RL_is_open,world.door_RR_is_open,world.double_blinker)  # --Echo class CAN function to send data--Sun Jian--
 
         if not self._autopilot_enabled:
             if isinstance(self._control, carla.VehicleControl):
@@ -617,7 +677,7 @@ class KeyboardControl(object):
 # ==============================================================================
 class CAN(object):
     def __init__(self):   # --class CAN init
-        self.CollectionInterval=0.1   #--Data collection time interval  unit:seconds(i.e. 0.2=200ms)
+        self.CollectionInterval=0.2   #--Data collection time interval  unit:seconds(i.e. 0.2=200ms)
         self.Engine_time=time.time()
         self.ABS_time = time.time()
         self.Transmission_time = time.time()
@@ -683,6 +743,13 @@ class CAN(object):
             message = db_CAN.get_message_by_name('Airbag')
             data = message.encode({'CollisionIntensity': CollisionIntensity})
             encodedata = can.Message(arbitration_id=message.frame_id, data=data, is_extended_id=False)
+            can_bus.send(encodedata)
+
+    def send_BCM(self, DOOR_OPEN_FL,DOOR_OPEN_FR,DOOR_OPEN_RL,DOOR_OPEN_RR,HIGH_BEAM_FLASH):   #--BCM(Door,flinker)
+            message = db_CAN.get_message_by_name('BCM')
+            data = message.encode({'DOOR_OPEN_FL': DOOR_OPEN_FL, 'DOOR_OPEN_FR': DOOR_OPEN_FR,'DOOR_OPEN_RL': DOOR_OPEN_RL,'DOOR_OPEN_RR': DOOR_OPEN_RR,'HIGH_BEAM_FLASH': HIGH_BEAM_FLASH})
+            encodedata = can.Message(arbitration_id=message.frame_id, data=data, is_extended_id=False)
+            print(encodedata)
             can_bus.send(encodedata)
 
 
@@ -1348,8 +1415,8 @@ def main():
     argparser.add_argument(
         '--res',
         metavar='WIDTHxHEIGHT',
-        default='1200x450',                                     #--修改分辨率
-        help='window resolution (default: 1280x720)')
+        default='1600x1100',                                     #--修改分辨率
+        help='window resolution (default: 800x600)')
     argparser.add_argument(
         '--filter',
         metavar='PATTERN',
