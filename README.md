@@ -95,10 +95,12 @@ Grafana query data from Timestream.
 **12. Data visualization**
 
 There are 4 parts in the Grafana Dashboard
-Gauge #1-Speed history， current speed and analysis statics
-Gauge #2-Gear history heatmap， current gear and analysis statics
-Gauge #3-Collision intensity history， current door&flinker status
-Gauge #4-Gas pedal history，current padel position and analysis statics
+
+* Gauge #1-Speed history， current speed and analysis statics
+* Gauge #2-Gear history heatmap， current gear and analysis statics
+* Gauge #3-Collision intensity history， current door&flinker status
+* Gauge #4-Gas pedal history，current padel position and analysis statics
+
 * * *
 **13. Persistent storage**
 
@@ -106,6 +108,7 @@ The vehicle data can be stored to Amazon s3 for persistent, low-cost storage.
 
 # Getting Help
 It's welcome to contact if you have any technical questions about the demo.
+E-Mail:sunjimmy@amazon.com
 # Resources
 The following documents are used for reference for the construction of this demo,appreciate the efforts of the authors.
 * [AWS IoT FleetWise Developer Guide](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html) provides key concepts and instructions for using AWS IoT FleetWise service.
