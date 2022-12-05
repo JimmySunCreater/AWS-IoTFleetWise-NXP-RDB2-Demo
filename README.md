@@ -10,7 +10,7 @@ This guide is intended to demonstrate the  features of AWS IoT FleetWise by buil
 It's assumed that you have got aws account and config aws cli with administrator rights.
 >Note: AWS IoT FleetWise is currently available in US East (N. Virginia) and Europe (Frankfurt).
 # Architecture
-![IoTFleetwise%20RDB2_02.png](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/IoTFleetwise%20RDB2_02.png)
+![IoTFleetwise%20RDB2_02.png](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/IoTFleetwise%20RDB2%20Architecture.png)
 ## Models/Services and usage
 * [Carla](http://carla.org/)
 
@@ -35,7 +35,7 @@ It's assumed that you have got aws account and config aws cli with administrator
   Amazon Managed Grafana is a fully managed service with rich, interactive data visualizations to help customers analyze, monitor, and alarm on metrics, logs, and traces across multiple data sources. This demo use AMG to visualize near-realtime data such as vehicle speed,gear and perform statistical analysis such as collision time and collision severity.
 ## Environment and Dashboard
 Grafana Dashboard
-![GrafanaDashboard](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/GrafanaDashboard.png)
+![GrafanaDashboard](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/Grafana%20Gauge.png)
 
 Environment
 ![Environment.png](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Environment.png)
