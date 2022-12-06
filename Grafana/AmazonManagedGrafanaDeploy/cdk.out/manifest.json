@@ -1,0 +1,100 @@
+{
+  "version": "16.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "FleetwiseDemoGrafanaStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "FleetwiseDemoGrafanaStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "FleetwiseDemoGrafanaStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "FleetwiseDemoGrafanaStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/435f56e7ae03831998778f910f3a3d9ee366306e02c5fd72ec9f0a88609c01f5.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "FleetwiseDemoGrafanaStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "FleetwiseDemoGrafanaStack.assets"
+      ],
+      "metadata": {
+        "/FleetwiseDemoGrafanaStack/Lambda-Role-555414/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaRole555414F6CAE1DD"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/Grafana-Role-555414/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GrafanaRole55541476438289"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/amgworkspace-555414/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amgworkspace555414CustomResourcePolicy6556F43B"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/amgworkspace-555414/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amgworkspace5554141E6EEE24"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/FleetwiseDemoGrafanaStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "FleetwiseDemoGrafanaStack"
+    }
+  }
+}

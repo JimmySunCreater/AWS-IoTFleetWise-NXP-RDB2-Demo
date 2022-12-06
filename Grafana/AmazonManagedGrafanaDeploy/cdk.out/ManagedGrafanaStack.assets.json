@@ -1,0 +1,32 @@
+{
+  "version": "16.0.0",
+  "files": {
+    "4a575666d1c2c6412590d2a56f328e040a81ad1ef59aecee31ae9b393d05f659": {
+      "source": {
+        "path": "asset.4a575666d1c2c6412590d2a56f328e040a81ad1ef59aecee31ae9b393d05f659",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "4a575666d1c2c6412590d2a56f328e040a81ad1ef59aecee31ae9b393d05f659.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "f1d53b4b1dba603ce26401d9f7e9d32953ccd9f4c5ef4990aaa4bb6d9dd6eb42": {
+      "source": {
+        "path": "ManagedGrafanaStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "f1d53b4b1dba603ce26401d9f7e9d32953ccd9f4c5ef4990aaa4bb6d9dd6eb42.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

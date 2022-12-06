@@ -41,7 +41,8 @@ Grafana Dashboard
 ![GrafanaDashboard](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/Grafana%20Gauge.png)
 
 # Deploy and Run
-The procedures to deploy and run the demo are as follows while please refer to the git folders for detailed configuration.
+The procedures blow describes the process of data collection in time order. 
+
 * * *
 **1. Model vehicle and create campaign**
 
@@ -50,12 +51,12 @@ A virtral vehicle model need to be created in IoT FleetWise to perform data sign
 **2. Campaign approval and release**
 
 The compaign will be deployed once user approved the campaign. If you want to pause collecting data from vehicles connected to the campaign, on the Campaign summary page, choose Suspend. To resume collecting data from vehicles connected to the campaign, choose Resume.
->Detailed configuration for step 1 and 2 can be reached at <u>[/Fleetwise/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Fleetwise/README.md)</u>
+>Detailed configuration for step 1 and 2 can be reached at <u>[Amazon IoT Fleetwise Deploy](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Fleetwise/README.md)</u>
 * * *
 **3. Vehicle Authentication**
 
 The RDB2 is used as vehicle gateway to upload data, IoT FleetWise Edge Agent need to be deployed in RDB2 as application and a certification is also needed for authentication to perform legal communication with IoT Core. 
->Detailed configuration can be reached at [/NXP-VNP-RDB2/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/NXP-VNP-RDB2/README.md)
+>Detailed configuration can be reached at [RDB2 Deploy](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/NXP-VNP-RDB2/README.md)
 * * *
 **4. Deploy data collection schema**
 
@@ -68,7 +69,7 @@ The DBC file(CAN database files)is a simple text file that consists of informati
 **6. Data ingestion**
 
 Since CARLA is install in a server, a usb to CAN converter is used to transfer the digital data into CAN bus logic level signal. CAN high/low are connected to FLEX_CAN0_H/L.
->Detailed configuration for step 5 and 6 can be reached at [/CARLA/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/CARLA/README.md)
+>Detailed configuration for step 5 and 6 can be reached at [CARLA Deploy](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/CARLA/README.md)
 * * *
 **7. Inspect canbus data and package**
 
@@ -81,12 +82,12 @@ The data will be packed and send to IoT Core by IoT FleetWise Edge Agent.
 **9. Store vehicle data**
 
 The data will be stored at Amazon Timestream.
->Detailed configuration for Timestream can be reached at [Fleetwise/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Fleetwise/README.md)
+>Detailed configuration for Timestream can be reached at [Amazon IoT Fleetwise Deploy](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Fleetwise/README.md)
 * * *
 **10. Config visualization specification**
 
 Quickly setting up Amazon Managed Grafana dashboards to demonstrate analysis of data stored in Amazon Timestream by AWS IoT FleetWise service
->Detailed configuration for Timestream can be reached at [Grafana/README.md](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/README.md)
+>Detailed configuration for Timestream can be reached at [Amazon Managed Grafana Deploy](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/Grafana/README.md)
 * * *
 **11. Query data and process**
 
@@ -96,16 +97,26 @@ Grafana query data from Timestream.
 
 There are 4 parts in the Grafana Dashboard
 
-* Gauge #1-Speed history， current speed and analysis statics
-* Gauge #2-Gear history heatmap， current gear and analysis statics
-* Gauge #3-Collision intensity history， current door&flinker status
+* Gauge #1-Speed history，current speed and analysis statics
+* Gauge #2-Gear history heatmap，current gear and analysis statics
+* Gauge #3-Collision intensity history，current door&flinker status
 * Gauge #4-Gas pedal history，current padel position and analysis statics
 
 * * *
 **13. Persistent storage**
 
 The vehicle data can be stored to Amazon s3 for persistent, low-cost storage.
-
+* * *
+A quick deploy and run method is to configure the modules/services in following order.
+```mermaid
+graph TD
+A[Hardware and Software Preparation] --> B(CARLA Deploy)
+B --> C(RDB2 Deploy)
+C --> D(Amazon IoT Fleetwise Deploy)
+C --> E(Amazon Managed Grafana Deploy)
+E --> F(Demo Run)
+D --> F(Demo Run)
+```
 # Getting Help
 It's welcome to contact if you have any technical questions about the demo.
 E-Mail:sunjimmy@amazon.com

@@ -1,0 +1,376 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.0.130"
+        }
+      },
+      "FleetwiseDemoGrafanaStack": {
+        "id": "FleetwiseDemoGrafanaStack",
+        "path": "FleetwiseDemoGrafanaStack",
+        "children": {
+          "Lambda-Role-555414": {
+            "id": "Lambda-Role-555414",
+            "path": "FleetwiseDemoGrafanaStack/Lambda-Role-555414",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FleetwiseDemoGrafanaStack/Lambda-Role-555414/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "policies": [
+                      {
+                        "policyName": "grafana-lambda-policy",
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "iam:PassRole",
+                                "sso:*"
+                              ],
+                              "Effect": "Allow",
+                              "Resource": "*"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    ],
+                    "roleName": "lambda_role-555414"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.8.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.8.0"
+            }
+          },
+          "Grafana-Role-555414": {
+            "id": "Grafana-Role-555414",
+            "path": "FleetwiseDemoGrafanaStack/Grafana-Role-555414",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FleetwiseDemoGrafanaStack/Grafana-Role-555414/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "grafana.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AWSXrayReadOnlyAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AWSIoTSiteWiseReadOnlyAccess"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonTimestreamReadOnlyAccess"
+                          ]
+                        ]
+                      }
+                    ],
+                    "policies": [
+                      {
+                        "policyName": "grafana-policy",
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "sns:Publish",
+                                "aps:ListWorkspaces",
+                                "aps:DescribeWorkspace",
+                                "aps:QueryMetrics",
+                                "aps:GetLabels",
+                                "aps:GetSeries",
+                                "aps:GetMetricMetadata",
+                                "cloudwatch:DescribeAlarmsForMetric",
+                                "cloudwatch:DescribeAlarmHistory",
+                                "cloudwatch:DescribeAlarms",
+                                "cloudwatch:ListMetrics",
+                                "cloudwatch:GetMetricStatistics",
+                                "cloudwatch:GetMetricData",
+                                "logs:DescribeLogGroups",
+                                "logs:GetLogGroupFields",
+                                "logs:StartQuery",
+                                "logs:StopQuery",
+                                "logs:GetQueryResults",
+                                "logs:GetLogEvents",
+                                "ec2:DescribeTags",
+                                "ec2:DescribeInstances",
+                                "ec2:DescribeRegions",
+                                "tag:GetResources",
+                                "es:ESHttpGet",
+                                "es:DescribeElasticsearchDomains",
+                                "es:ListDomainNames"
+                              ],
+                              "Effect": "Allow",
+                              "Resource": "*"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    ],
+                    "roleName": "Grafana-Role-555414"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.8.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.8.0"
+            }
+          },
+          "amgworkspace-555414": {
+            "id": "amgworkspace-555414",
+            "path": "FleetwiseDemoGrafanaStack/amgworkspace-555414",
+            "children": {
+              "Provider": {
+                "id": "Provider",
+                "path": "FleetwiseDemoGrafanaStack/amgworkspace-555414/Provider",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.SingletonFunction",
+                  "version": "2.8.0"
+                }
+              },
+              "CustomResourcePolicy": {
+                "id": "CustomResourcePolicy",
+                "path": "FleetwiseDemoGrafanaStack/amgworkspace-555414/CustomResourcePolicy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "FleetwiseDemoGrafanaStack/amgworkspace-555414/CustomResourcePolicy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "grafana:CreateWorkspace",
+                              "Effect": "Allow",
+                              "Resource": "*"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "policyName": "amgworkspace555414CustomResourcePolicy6556F43B",
+                        "roles": [
+                          {
+                            "Ref": "LambdaRole555414F6CAE1DD"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                      "version": "2.8.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Policy",
+                  "version": "2.8.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "FleetwiseDemoGrafanaStack/amgworkspace-555414/Resource",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "FleetwiseDemoGrafanaStack/amgworkspace-555414/Resource/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.8.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.8.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.custom_resources.AwsCustomResource",
+              "version": "2.8.0"
+            }
+          },
+          "AWS679f53fac002430cb0da5b7982bd2287": {
+            "id": "AWS679f53fac002430cb0da5b7982bd2287",
+            "path": "FleetwiseDemoGrafanaStack/AWS679f53fac002430cb0da5b7982bd2287",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "FleetwiseDemoGrafanaStack/AWS679f53fac002430cb0da5b7982bd2287/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "FleetwiseDemoGrafanaStack/AWS679f53fac002430cb0da5b7982bd2287/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.8.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "FleetwiseDemoGrafanaStack/AWS679f53fac002430cb0da5b7982bd2287/Code/AssetBucket",
+                    "children": {
+                      "Notifications": {
+                        "id": "Notifications",
+                        "path": "FleetwiseDemoGrafanaStack/AWS679f53fac002430cb0da5b7982bd2287/Code/AssetBucket/Notifications",
+                        "constructInfo": {
+                          "fqn": "constructs.Construct",
+                          "version": "10.0.130"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.8.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.8.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "FleetwiseDemoGrafanaStack/AWS679f53fac002430cb0da5b7982bd2287/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "4a575666d1c2c6412590d2a56f328e040a81ad1ef59aecee31ae9b393d05f659.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "LambdaRole555414F6CAE1DD",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "index.handler",
+                    "runtime": "nodejs12.x",
+                    "timeout": 120
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.8.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.8.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "FleetwiseDemoGrafanaStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "FleetwiseDemoGrafanaStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.8.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "FleetwiseDemoGrafanaStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.8.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.0.130"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.8.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.8.0"
+    }
+  }
+}

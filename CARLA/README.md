@@ -1,4 +1,5 @@
-# CARLA Deploy and Run
+# Introduction of CARLA Deploy and Run
+This section describes how to deploy and run CARLA to act as a simulated vehicle and send CAN data to RDB2.
 ## Requirements of CARLA
 The following [requirements](https://CARLA.readthedocs.io/en/latest/start_quickstart/) should be fulfilled before installing CARLA:
 
@@ -8,12 +9,10 @@ The following [requirements](https://CARLA.readthedocs.io/en/latest/start_quicks
 * Python. Python is the main scripting language in CARLA.Python>=3.7 recommanded.
 * Pip. Some installation methods of the CARLA client library require pip or pip3 (depending on your Python version) version 20.3 or higher. To check your pip version:
 ```
- # For Python 3
  pip3 -V
 ```
 If you need to upgrade:
 ```
- # For Python 3
  pip3 install --upgrade pip
 ```
 ## CARLA Installation
@@ -57,14 +56,14 @@ A window containing a view over the city will pop up. This is the spectator view
 The CARLA simulator consists of a scalable client-server architecture.
 The server is responsible for everything related with the simulation itself: sensor rendering, computation of physics, updates on the world-state and its actors and much more. As it aims for realistic results, the best fit would be running the server with a dedicated GPU, especially when dealing with machine learning.
 The client side consists of a sum of client modules controlling the logic of actors on scene and setting world conditions. This is achieved by leveraging the CARLA API (in Python or C++), a layer that mediates between server and client that is constantly evolving to provide new functionalities.
-![679444238f9b73dfe7f11a3247f86bfa.png](evernotecid://2CC7615B-0BBB-4902-B30D-D4FC2379FA52/appyinxiangcom/22410328/ENResource/p8)
+![CARLA API](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/CARLA/carla_modules.png)
 Demo code using Python to start the virtual vehicle.
-Download the .py file and run:
+Download [IoTFleetwiseRDB2DemoCode\(manual_control\).py](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/CARLA/IoTFleetwiseRDB2DemoCode%28manual_control%29.py) file and run:
 ```
 cd <path to the python file>
 python3 IoTFleetwiseRDB2DemoCode(manual_control).py
 ```
-### Code Deepdive 
+## Code Deepdive 
 The vehicle value can be accessed using [CARLA PythonAPI](https://CARLA.readthedocs.io/en/latest/python_api/) including Cameras (RGB, depth and semantic segmentation),Collision detector,GNSS ,IMU sensor,Lane invasion,LIDAR,Obstacle,Radar. All the data is decimal, it can't be used directly in the real vehicle. 
 Normally, the data transfer within the vehicle using CANBus. CAN is a message oriented protocol for quick serial data exchange between electronic control units (ECU) in automotive and automation industry as well as in other industries. 
 IoTFleetwise and Edge Agent following the CAN protocals.The DBC file(CAN database files)is a simple text file that consists of information for decoding raw CAN bus data to physical values in human readable form or encoding physical values to CAN bus data. DBC file is used as shared schema for data exchange from the car and cloud in this demo. Python code is used to convert CARLA physical values(decimal) to ECU CAN bus values（hexadecimal）and ingest to RDB2.
@@ -92,8 +91,9 @@ def send_Engine(self, ThrottlePosition):
 ```
 >self.CollectionInterval is the interval time of data collection, it's configurable.
 
-* Hot keys
-Welcome to CARLA manual control.Use ARROWS or WASD keys for control.
+## Hot keys
+Welcome to CARLA manual control.
+Use ARROWS or WASD keys for control.
 
     W            : throttle
     S            : brake
