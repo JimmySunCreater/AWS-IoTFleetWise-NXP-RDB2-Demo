@@ -12,9 +12,9 @@ It's assumed that you have got aws account and config aws cli with administrator
 # Architecture
 ![IoTFleetwise%20RDB2_02.png](https://github.com/JimmySunCreater/AWS-IoTFleetwise-NXP-RDB2-Demo/blob/main/IoTFleetwise%20RDB2%20Architecture.png)
 ## Moduels/Services Used
-* [Carla](http://carla.org/)
+* [CARLA](http://CARLA.org/)
 
-  CARLA is an open-source autonomous driving simulator. It was built from scratch to serve as a modular and flexible API to address a range of tasks involved in the problem of autonomous driving.This demo use carla to simulate ECUs in the vehicle and send encoded data to the signal collecter(NXP-S32G-VNP-RDB2)in format of CANBus.
+  CARLA is an open-source autonomous driving simulator. It was built from scratch to serve as a modular and flexible API to address a range of tasks involved in the problem of autonomous driving.This demo use CARLA to simulate ECUs in the vehicle and send encoded data to the signal collecter(NXP-S32G-VNP-RDB2)in format of CANBus.
 * [NXP-S32G-VNP-RDB2](https://www.nxp.com/design/designs/s32g2-vehicle-networking-reference-design:S32G-VNP-RDB2)
 
   The S32G-VNP-RDB2 is a compact, highly optimized and integrated board engineering for vehicle service-oriented gateway (SoG), domain control applications, high-performance processing, safety and security applications. This demo use S32G-VNP-RDB2 as vehicle gateway. It receives CAN data from CARLA by interface CAN0,on the other hand, IoT Fleetwise edge agent is deployed to inspect and upload following the campaign schema from FleetWise.
@@ -114,5 +114,5 @@ The following documents are used for reference for the construction of this demo
 * [AWS IoT FleetWise Developer Guide](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html) provides key concepts and instructions for using AWS IoT FleetWise service.
 * [AWS IoT FleetWise Edge Agent Developer Guide](https://github.com/aws/aws-iot-fleetwise-edge/blob/main/docs/dev-guide/edge-agent-dev-guide.md) provides step-by-step instructions for building and running Edge Agent Reference Implementation for AWS IoT FleetWise.
 * [AWS IoT FleetWise API Reference](https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/Welcome.html) describes all the API operations for FleetWise.
-* [Demo-Auto-Aws IoT Fleetwise](https://github.com/aws4embeddedlinux/demo-auto-aws-iotfleetwise) provides a demo using AWS Graviton and RDB2+carla to simulate vehicle.
+* [Demo-Auto-Aws IoT Fleetwise](https://github.com/aws4embeddedlinux/demo-auto-aws-iotfleetwise) provides a demo using AWS Graviton and RDB2+CARLA to simulate vehicle.
 * [AWS IoT FleetWise demo kit](https://gitlab.aws.dev/emea-iot-specialist-sa/aws-iot-fleetwise-demokit/-/tree/main/grafana_dashboards) contains guidelines for quickly setting up Amazon Managed Grafana dashboards to demonstrate analysis of data stored in Amazon Timestream.
