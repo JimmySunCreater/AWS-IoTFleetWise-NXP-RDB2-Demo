@@ -677,7 +677,7 @@ class KeyboardControl(object):
 # ==============================================================================
 class CAN(object):
     def __init__(self):   # --class CAN init
-        self.CollectionInterval=0.2   #--Data collection time interval  unit:seconds(i.e. 0.2=200ms)
+        self.CollectionInterval=0.1   #--Data collection time interval  unit:seconds(i.e. 0.2=200ms)
         self.Engine_time=time.time()
         self.ABS_time = time.time()
         self.Transmission_time = time.time()
@@ -1415,7 +1415,7 @@ def main():
     argparser.add_argument(
         '--res',
         metavar='WIDTHxHEIGHT',
-        default='1600x1100',                                     #--修改分辨率
+        default='870x930',                                     #--修改分辨率
         help='window resolution (default: 800x600)')
     argparser.add_argument(
         '--filter',
